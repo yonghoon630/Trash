@@ -76,7 +76,13 @@
 			</script>
 		<![endif]-->
 <style>
- <!-- real.css 참조 -->
+<!--
+real
+.css
+ 
+참조
+ 
+-->
 </style>
 </head>
 <body>
@@ -149,7 +155,7 @@
 								// 관리자 로그인
 								if (session.getAttribute("sessionID") != null && session.getAttribute("sessionID").equals("admin")) {
 							%>
-							<li><a href="../admin/AdminMain.jsp">회원보기 <i
+							<li><a href="../admin/AdminUserList.jsp">회원보기 <i
 									class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 							<li><a href="../admin/cctvForm.jsp">CCTV <i
 									class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
@@ -199,27 +205,25 @@
 				<!-- //col2 -->
 
 				<article class="column col3">
-					<h4 class="col_tit">Blog</h4>
-					<p class="col_desc">해상도에 따라 이미지를 다르게 표현하는 방법입니다.</p>
+					<h4 class="col_tit">NEWS</h4>
+
 					<!-- blog -->
 					<div class="blog1">
 						<h5 class="ir_su">Image1</h5>
 						<figure>
-							<img src="img/blog4_@1.jpg" class="img-normal" alt="normal image">
-							<img src="img/blog4_@2.jpg" class="img-retina" alt="retina image">
-							<figcaption>반응형 웹 사이트 이미지 글입니다. 반응형 웹 사이트 이미지 글입니다.
-								반응형 웹 사이트 이미지 글입니다. 반응형 웹 사이트 이미지 글입니다.</figcaption>
+							<a href="https://www.thereport.co.kr/news/articleView.html?idxno=34577" target='_blank'><img src="img/newsimg.jpg" class="img-normal" alt="normal image"></a>
+							<a href="https://www.thereport.co.kr/news/articleView.html?idxno=34577" target='_blank'><p><strong style="color:blue;">"쓰레기 버릴때 분리수거 철저"</strong></p>
+							<strong style="color:blue;">··· 종량제 봉투 뜯어 본다</strong>
+							</a>
+							<p>  　</p>
+							<p>배출된 생활폐기물에 재활용품이 혼입되는 등 반입 기준을 충족하지 못한 경우 동(洞)에 행정처분을 내린다.</p>
+							<p>처분은 적발된 동에 1차 경고를 하고,  </p>
+							<p>1차 경고 후에도 적발된 동에는 3일 이상 반입정지 처분을 내린다.</p>
+							<p>반입정지 처분을 받은 지역은 생활폐기물 수집 운반 대행업체의 생활폐기물 수거가 중단된다.</p>						
 						</figure>
 					</div>
 					<!--//blog -->
-					<!-- blog2 -->
-					<div class="blog2 mt15">
-						<div class="img-retina">
-							<h5>Image2</h5>
-						</div>
-						<p>반응형 웹 사이트 이미지 글입니다. 반응형 웹 사이트 이미지 글입니다. 반응형 웹 사이트 이미지 글입니다.</p>
-					</div>
-					<!--//blog2 -->
+
 				</article>
 				<!-- //col3 -->
 			</section>
@@ -289,15 +293,26 @@
 
 				<h3 class="ir_su">반응형 사이트 오른쪽 컨텐츠</h3>
 				<article class="column col7">
-
-					<h4 class="col_tit">환영합니다.</h4>
+<%
+		String name = null;
+		if(session.getAttribute("sessionID") != null){
+			String id = session.getAttribute("sessionID").toString();		
+		// 세션에 저장된 아이디를 가져와서
+		// 그 아이디 해당하는 회원정보를 가져온다.
+		MemberDAO dao = MemberDAO.getInstance();
+		MemberBean memberBean = dao.getUserInfo(id);
+		name = memberBean.getName() + "님 환영합니다";
+		} else
+			name = "로그인 하십시오";
+	%>
+					<h4 class="col_tit"><%=name%></h4>
 
 				</article>
 				<!-- //col7 -->
 
 				<article class="column col8">
 					<h4 class="col_tit"></h4>
-					
+
 					<!-- side2 -->
 					<div class="side2">
 						<figure class="front">
