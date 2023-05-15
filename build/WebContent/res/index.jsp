@@ -77,11 +77,22 @@
 		<![endif]-->
 <style>
 <!--
-real
-.css
- 
-참조
- 
+table {
+	margin: 0 auto;
+	border: 2px solid #0099ff;
+	border-collapse: collapse;
+}
+
+td, th {
+	padding: 6px;
+	border: 1px solid #0099ff;
+}
+
+th {
+	background-color: #0099ff;
+	color: #fff;
+	font-weight: bold;
+}
 -->
 </style>
 </head>
@@ -112,6 +123,26 @@ real
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript">
+			function checkValue() {
+				inputForm = eval("document.loginInfo");
+				if (!inputForm.id.value) {
+					alert("아이디를 입력하세요");
+					inputForm.id.focus();
+					return false;
+				}
+				if (!inputForm.password.value) {
+					alert("비밀번호를 입력하세요");
+					inputForm.password.focus();
+					return false;
+				}
+			}
+
+			// 회원가입 버튼 클릭시 회원가입 화면으로 이동
+			function goJoinForm() {
+				location.href = "JoinForm.jsp";
+			}
+		</script>
 	</header>
 	<!-- //nav -->
 
@@ -124,18 +155,66 @@ real
 			<section id="cont_left">
 				<h3 class="ir_su">메뉴 및 게시판 컨텐츠 영역</h3>
 				<article class="column col1">
+					<%
+						if (session.getAttribute("sessionID") != null) {
+					%>
 					<h4 class="col_tit">Menu</h4>
-					<!-- 메뉴 -->
+					<%
+						} else {
+					%>
+					<h4 class="col_tit">ID 로그인</h4>
+					<%
+						}
+					%>
 					<div class="menu">
 						<ul>
-
 							<%
 								String s = session.getId();
 								// 로그인 안되었을 경우 - 로그인, 회원가입 버튼을 보여준다.
 								if (session.getAttribute("sessionID") == null) {
 							%>
-							<li><a href="../view/LoginForm.jsp">로그인 <i
-									class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+
+							<li><div id="wrap">
+									<form name="loginInfo" method="post"
+										action="../pro/LoginPro.jsp" onsubmit="return checkValue()">
+
+										<table>
+											<tr>
+												<td bgcolor="skyblue">아이디</td>
+												<td><input type="text" name="id" maxlength="50"></td>
+											</tr>
+											<tr>
+												<td bgcolor="skyblue">비밀번호</td>
+												<td><input type="password" name="password"
+													maxlength="50"></td>
+											</tr>
+											<tr>
+												<td colspan="2" style="width: 100%;"><input
+													type="submit" value="로그인"
+													style="width: 100%; padding: 10px;"></td>
+											</tr>
+										</table>
+
+									</form>
+
+									<%
+										// 아이디, 비밀번호가 틀릴경우 화면에 메시지 표시
+											// LoginPro.jsp에서 로그인 처리 결과에 따른 메시지를 보낸다.
+											String msg = request.getParameter("msg");
+
+											if (msg != null && msg.equals("0")) {
+												out.println("<br>");
+												out.println("<font color='red' size='2'>비밀번호를 확인해 주세요.</font>");
+											} else if (msg != null && msg.equals("-1")) {
+												out.println("<br>");
+												out.println("<font color='red' size='2'>아이디를 확인해 주세요.</font>");
+											}
+									%>
+								</div></li>
+
+
+
+
 							<li><a href="../view/JoinForm.jsp">회원가입 <i
 									class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 							<%
@@ -211,15 +290,20 @@ real
 					<div class="blog1">
 						<h5 class="ir_su">Image1</h5>
 						<figure>
-							<a href="https://www.thereport.co.kr/news/articleView.html?idxno=34577" target='_blank'><img src="img/newsimg.jpg" class="img-normal" alt="normal image"></a>
-							<a href="https://www.thereport.co.kr/news/articleView.html?idxno=34577" target='_blank'><p><strong style="color:blue;">"쓰레기 버릴때 분리수거 철저"</strong></p>
-							<strong style="color:blue;">··· 종량제 봉투 뜯어 본다</strong>
-							</a>
-							<p>  　</p>
+							<a
+								href="https://www.thereport.co.kr/news/articleView.html?idxno=34577"
+								target='_blank'><img src="img/newsimg.jpg"
+								class="img-normal" alt="normal image"></a>
+							<a
+								href="https://www.thereport.co.kr/news/articleView.html?idxno=34577"
+								target='_blank'><p>
+									<strong style="color: blue;">"쓰레기 버릴때 분리수거 철저"</strong>
+								</p> <strong style="color: blue;">··· 종량제 봉투 뜯어 본다</strong> </a>
+							<p></p>
 							<p>배출된 생활폐기물에 재활용품이 혼입되는 등 반입 기준을 충족하지 못한 경우 동(洞)에 행정처분을 내린다.</p>
-							<p>처분은 적발된 동에 1차 경고를 하고,  </p>
+							<p>처분은 적발된 동에 1차 경고를 하고,</p>
 							<p>1차 경고 후에도 적발된 동에는 3일 이상 반입정지 처분을 내린다.</p>
-							<p>반입정지 처분을 받은 지역은 생활폐기물 수집 운반 대행업체의 생활폐기물 수거가 중단된다.</p>						
+							<p>반입정지 처분을 받은 지역은 생활폐기물 수집 운반 대행업체의 생활폐기물 수거가 중단된다.</p>
 						</figure>
 					</div>
 					<!--//blog -->
@@ -272,7 +356,7 @@ real
 				<!-- //col5 -->
 
 				<article class="column col6">
-					<h4 class="col_tit">Video</h4>
+					<h4 class="col_tit">실제사례</h4>
 					<!-- video -->
 					<!-- <video autoplay="autoplay" controls="controls" loop="loop">
 								<source src="img/video.mp4" type="video/mp4">
@@ -290,65 +374,74 @@ real
 			<!-- //cont_center -->
 
 			<section id="cont_right">
-
 				<h3 class="ir_su">반응형 사이트 오른쪽 컨텐츠</h3>
 				<article class="column col7">
-<%
-		String name = null;
-		if(session.getAttribute("sessionID") != null){
-			String id = session.getAttribute("sessionID").toString();		
-		// 세션에 저장된 아이디를 가져와서
-		// 그 아이디 해당하는 회원정보를 가져온다.
-		MemberDAO dao = MemberDAO.getInstance();
-		MemberBean memberBean = dao.getUserInfo(id);
-		name = memberBean.getName() + "님 환영합니다";
-		} else
-			name = "로그인 하십시오";
-	%>
-					<h4 class="col_tit"><%=name%></h4>
-
-				</article>
-				<!-- //col7 -->
-
-				<article class="column col8">
-					<h4 class="col_tit"></h4>
-
+					<%
+						String name = null;
+						if (session.getAttribute("sessionID") != null) {
+							String id = session.getAttribute("sessionID").toString();
+							// 세션에 저장된 아이디를 가져와서
+							// 그 아이디 해당하는 회원정보를 가져온다.
+							MemberDAO dao = MemberDAO.getInstance();
+							MemberBean memberBean = dao.getUserInfo(id);
+							name = memberBean.getName() + "님 환영합니다";
+						} else {
+							name = "로그인 하십시오";
+						}
+					%>
+					<h4 class="col_tit"><%=name%></h4>					
+					<p class="col_desc">수정 및 삭제는 메뉴를 이용하세요</p>
 					<!-- side2 -->
 					<div class="side2">
-						<figure class="front">
-							<img src="img/side2.jpg" alt="이미지2">
-							<figcaption>
-								<h3>Hover Effect</h3>
-							</figcaption>
-						</figure>
-						<figure class="back">
-							<img src="img/side4.jpg" alt="이미지2">
-							<figcaption>
-								<h3>Hover Effect</h3>
-							</figcaption>
-						</figure>
+						<%	
+							String name2 = null;
+							if (session.getAttribute("sessionID") != null) {
+							String id = session.getAttribute("sessionID").toString();
+							// 세션에 저장된 아이디를 가져와서
+							// 그 아이디 해당하는 회원정보를 가져온다.
+							MemberDAO dao = MemberDAO.getInstance();
+							MemberBean memberBean = dao.getUserInfo(id);
+						%>
+							<table>
+								<tr>
+									<td id="title">아이디</td>
+									<td><%=memberBean.getId()%></td>
+								</tr>
+								<tr>
+									<td id="title">이름</td>
+									<td><%=memberBean.getName()%></td>
+								</tr>
+								<tr>
+									<td id="title">성별</td>
+									<td><%=memberBean.getGender()%></td>
+								</tr>
+
+								<tr>
+									<td id="title">생일</td>
+									<td><%=memberBean.getBirthyy()%>년 <%=memberBean.getBirthmm()%>월
+										<%=memberBean.getBirthdd()%>일</td>
+								</tr>
+								<tr>
+									<td id="title">이메일</td>
+									<td><%=memberBean.getMail1()%>@ <%=memberBean.getMail2()%></td>
+								</tr>
+								<tr>
+									<td id="title">휴대전화</td>
+									<td><%=memberBean.getPhone()%></td>
+								</tr>
+								<tr>
+									<td id="title">주소</td>
+									<td><%=memberBean.getAddress()%></td>
+								</tr>
+							</table>
+							<%} %>
+
 					</div>
 					<!-- side2//-->
 				</article>
 				<!-- //col8 -->
 
-				<article class="column col9">
-					<h4 class="col_tit">Effect3</h4>
-					<p class="col_desc">CSS3의 transform을 이용한 마우스 오버효과입니다.</p>
-					<!-- side3 -->
-					<div class="side3">
-						<figure>
-							<img src="img/side3.jpg" alt="이미지3">
-							<figcaption>
-								<h3>
-									Hover<em>Effect</em>
-								</h3>
-							</figcaption>
-						</figure>
-					</div>
-					<!-- side3//-->
-				</article>
-				<!-- //col9 -->
+				
 			</section>
 			<!-- //cont_right -->
 		</div>
@@ -461,5 +554,19 @@ real
 </body>
 </html>
 
-
+<script>
+	function showLoginForm() {
+		var loginForm = document.createElement("iframe");
+		loginForm.src = "../view/LoginForm.jsp";
+		loginForm.style.position = "fixed";
+		loginForm.style.top = "0";
+		loginForm.style.left = "0";
+		loginForm.style.width = "100%";
+		loginForm.style.height = "100%";
+		loginForm.style.border = "none";
+		loginForm.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+		document.body.appendChild(loginForm);
+	}
+//-->
+</script>
 

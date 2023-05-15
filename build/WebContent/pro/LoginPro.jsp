@@ -29,11 +29,11 @@
         }
         else if(check == 0) // 비밀번호가 틀릴경우
         {
-            msg = "../view/LoginForm.jsp?msg=0";
+            msg = "../res/index.jsp?msg=0";
         }
         else    // 아이디가 틀릴경우
         {
-            msg = "../view/LoginForm.jsp?msg=-1";
+            msg = "../res/index.jsp?msg=-1";
         }
          
         // sendRedirect(String URL) : 해당 URL로 이동
