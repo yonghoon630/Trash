@@ -31,7 +31,7 @@
         }
         // 취소 버튼 클릭시 로그인 화면으로 이동
         function goLoginForm() {
-            location.href="LoginForm.jsp";
+            location.href="../res/index.jsp";
         }
         function openIdChk() {
             	window.name ="parentForm";

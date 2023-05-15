@@ -70,11 +70,11 @@
 
 <!-- HTLM5shiv ie6~8 -->
 <!--[if lt IE 9]> 
-			<script src="js/html5shiv.min.js"></script>
-			<script type="text/javascript">
-				alert("현재 당신이 보는 브라우저는 지원하지 않습니다. 최신 브라우저로 업데이트해주세요!");
-			</script>
-		<![endif]-->
+         <script src="js/html5shiv.min.js"></script>
+         <script type="text/javascript">
+            alert("현재 당신이 보는 브라우저는 지원하지 않습니다. 최신 브라우저로 업데이트해주세요!");
+         </script>
+      <![endif]-->
 <style>
 <!--
 table {
@@ -124,29 +124,27 @@ th {
 			</div>
 		</div>
 		<script type="text/javascript">
-			function checkValue() {
-				inputForm = eval("document.loginInfo");
-				if (!inputForm.id.value) {
-					alert("아이디를 입력하세요");
-					inputForm.id.focus();
-					return false;
-				}
-				if (!inputForm.password.value) {
-					alert("비밀번호를 입력하세요");
-					inputForm.password.focus();
-					return false;
-				}
-			}
+         function checkValue() {
+            inputForm = eval("document.loginInfo");
+            if (!inputForm.id.value) {
+               alert("아이디를 입력하세요");
+               inputForm.id.focus();
+               return false;
+            }
+            if (!inputForm.password.value) {
+               alert("비밀번호를 입력하세요");
+               inputForm.password.focus();
+               return false;
+            }
+         }
 
-			// 회원가입 버튼 클릭시 회원가입 화면으로 이동
-			function goJoinForm() {
-				location.href = "JoinForm.jsp";
-			}
-		</script>
+         // 회원가입 버튼 클릭시 회원가입 화면으로 이동
+         function goJoinForm() {
+            location.href = "JoinForm.jsp";
+         }
+      </script>
 	</header>
 	<!-- //nav -->
-
-	<!-- //title -->
 
 	<main>
 	<section id="contents">
@@ -194,9 +192,7 @@ th {
 													style="width: 100%; padding: 10px;"></td>
 											</tr>
 										</table>
-
 									</form>
-
 									<%
 										// 아이디, 비밀번호가 틀릴경우 화면에 메시지 표시
 											// LoginPro.jsp에서 로그인 처리 결과에 따른 메시지를 보낸다.
@@ -211,10 +207,6 @@ th {
 											}
 									%>
 								</div></li>
-
-
-
-
 							<li><a href="../view/JoinForm.jsp">회원가입 <i
 									class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 							<%
@@ -265,13 +257,21 @@ th {
 								ArrayList<Bbs> list = bbsDAO.getList(boardID, 1);
 								for (int i = 0; i < 5; i++) {
 							%>
+							<%
+								if (!list.isEmpty()) {
+							%>
 							<li><a
-								href="../bbs/view.jsp?boardID=<%=boardID%>&bbsID=<%=list.get(i).getBbsID()%>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;")
-						.replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></li>
+								href="../bbs/view.jsp?boardID=<%=boardID%>&bbsID=<%=list.get(i).getBbsID()%>">
+									<%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;")
+							.replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>
+							</a></li>
 							<%
 								}
 							%>
 
+							<%
+								}
+							%>
 						</ul>
 						<a href="../bbs/bbs.jsp" class="more" title="더 보기">More <i
 							class="fa fa-plus-circle" aria-hidden="true"></i></a>
@@ -359,8 +359,8 @@ th {
 					<h4 class="col_tit">실제사례</h4>
 					<!-- video -->
 					<!-- <video autoplay="autoplay" controls="controls" loop="loop">
-								<source src="img/video.mp4" type="video/mp4">
-							</video> -->
+                        <source src="img/video.mp4" type="video/mp4">
+                     </video> -->
 					<div class="video">
 						<iframe src="https://www.youtube.com/embed/jdqwBnP1SY0"
 							frameborder="0"
@@ -389,59 +389,61 @@ th {
 							name = "로그인 하십시오";
 						}
 					%>
-					<h4 class="col_tit"><%=name%></h4>					
+					<h4 class="col_tit"><%=name%></h4>
 					<p class="col_desc">수정 및 삭제는 메뉴를 이용하세요</p>
 					<!-- side2 -->
 					<div class="side2">
-						<%	
+						<%
 							String name2 = null;
 							if (session.getAttribute("sessionID") != null) {
-							String id = session.getAttribute("sessionID").toString();
-							// 세션에 저장된 아이디를 가져와서
-							// 그 아이디 해당하는 회원정보를 가져온다.
-							MemberDAO dao = MemberDAO.getInstance();
-							MemberBean memberBean = dao.getUserInfo(id);
+								String id = session.getAttribute("sessionID").toString();
+								// 세션에 저장된 아이디를 가져와서
+								// 그 아이디 해당하는 회원정보를 가져온다.
+								MemberDAO dao = MemberDAO.getInstance();
+								MemberBean memberBean = dao.getUserInfo(id);
 						%>
-							<table>
-								<tr>
-									<td id="title">아이디</td>
-									<td><%=memberBean.getId()%></td>
-								</tr>
-								<tr>
-									<td id="title">이름</td>
-									<td><%=memberBean.getName()%></td>
-								</tr>
-								<tr>
-									<td id="title">성별</td>
-									<td><%=memberBean.getGender()%></td>
-								</tr>
+						<table>
+							<tr>
+								<td id="title">아이디</td>
+								<td><%=memberBean.getId()%></td>
+							</tr>
+							<tr>
+								<td id="title">이름</td>
+								<td><%=memberBean.getName()%></td>
+							</tr>
+							<tr>
+								<td id="title">성별</td>
+								<td><%=memberBean.getGender()%></td>
+							</tr>
 
-								<tr>
-									<td id="title">생일</td>
-									<td><%=memberBean.getBirthyy()%>년 <%=memberBean.getBirthmm()%>월
-										<%=memberBean.getBirthdd()%>일</td>
-								</tr>
-								<tr>
-									<td id="title">이메일</td>
-									<td><%=memberBean.getMail1()%>@ <%=memberBean.getMail2()%></td>
-								</tr>
-								<tr>
-									<td id="title">휴대전화</td>
-									<td><%=memberBean.getPhone()%></td>
-								</tr>
-								<tr>
-									<td id="title">주소</td>
-									<td><%=memberBean.getAddress()%></td>
-								</tr>
-							</table>
-							<%} %>
+							<tr>
+								<td id="title">생일</td>
+								<td><%=memberBean.getBirthyy()%>년 <%=memberBean.getBirthmm()%>월
+									<%=memberBean.getBirthdd()%>일</td>
+							</tr>
+							<tr>
+								<td id="title">이메일</td>
+								<td><%=memberBean.getMail1()%>@ <%=memberBean.getMail2()%></td>
+							</tr>
+							<tr>
+								<td id="title">휴대전화</td>
+								<td><%=memberBean.getPhone()%></td>
+							</tr>
+							<tr>
+								<td id="title">주소</td>
+								<td><%=memberBean.getAddress()%></td>
+							</tr>
+						</table>
+						<%
+							}
+						%>
 
 					</div>
 					<!-- side2//-->
 				</article>
 				<!-- //col8 -->
 
-				
+
 			</section>
 			<!-- //cont_right -->
 		</div>
@@ -477,80 +479,80 @@ th {
 	<script src="js/slick.min.js"></script>
 	<script src="js/lightgallery.min.js"></script>
 	<script>
-		//접기/펼치기
-		$(".btn").click(function(e) {
-			e.preventDefault();
-			$(".nav").slideToggle();
-			$(".btn").toggleClass("open");
-			//var btn = $(".btn").find(">i").attr("class");
-			//alert(btn);
+      //접기/펼치기
+      $(".btn").click(function(e) {
+         e.preventDefault();
+         $(".nav").slideToggle();
+         $(".btn").toggleClass("open");
+         //var btn = $(".btn").find(">i").attr("class");
+         //alert(btn);
 
-			if ($(".btn").hasClass("open")) {
-				//open이 있을 때
-				$(".btn").find(">i").attr("class", "fa fa-angle-up");
-			} else {
-				//open이 없을 때
-				$(".btn").find(">i").attr("class", "fa fa-angle-down");
-			}
-		});
+         if ($(".btn").hasClass("open")) {
+            //open이 있을 때
+            $(".btn").find(">i").attr("class", "fa fa-angle-up");
+         } else {
+            //open이 없을 때
+            $(".btn").find(">i").attr("class", "fa fa-angle-down");
+         }
+      });
 
-		$(window).resize(function() {
-			var wWidth = $(window).width();
-			if (wWidth > 600) {
-				$(".nav").removeAttr("style");
-			}
-		});
+      $(window).resize(function() {
+         var wWidth = $(window).width();
+         if (wWidth > 600) {
+            $(".nav").removeAttr("style");
+         }
+      });
 
-		//라이트 박스
-		$(".lightbox").lightGallery({
-			thumbnail : true,
-			autoplay : true,
-			pause : 3000,
-			progressBar : true
-		});
+      //라이트 박스
+      $(".lightbox").lightGallery({
+         thumbnail : true,
+         autoplay : true,
+         pause : 3000,
+         progressBar : true
+      });
 
-		//이미지 슬라이더
-		$(".slider").slick({
-			dots : true,
-			autoplay : true,
-			autoplaySpeed : 3000,
-			arrows : true,
-			responsive : [ {
-				breakpoint : 768,
-				settings : {
-					autoplay : false,
-				}
-			} ]
-		});
+      //이미지 슬라이더
+      $(".slider").slick({
+         dots : true,
+         autoplay : true,
+         autoplaySpeed : 3000,
+         arrows : true,
+         responsive : [ {
+            breakpoint : 768,
+            settings : {
+               autoplay : false,
+            }
+         } ]
+      });
 
-		//sns 공유하기
-		$(".facebook")
-				.click(
-						function(e) {
-							e.preventDefault();
-							window
-									.open(
-											'https://www.facebook.com/sharer/sharer.php?u='
-													+ encodeURIComponent(document.URL)
-													+ '&t='
-													+ encodeURIComponent(document.title),
-											'facebooksharedialog',
-											'menubar=no, toolbar=no, resizable=yes, scrollbars=yes, height=300, width=600');
-						});
-		$(".twitter")
-				.click(
-						function(e) {
-							e.preventDefault();
-							window
-									.open(
-											'https://twitter.com/intent/tweet?text=[%EA%B3%B5%EC%9C%A0]%20'
-													+ encodeURIComponent(document.URL)
-													+ '%20-%20'
-													+ encodeURIComponent(document.title),
-											'twittersharedialog',
-											'menubar=no, toolbar=no, resizable=yes, scrollbars=yes, height=300, width=600');
-						});
-	</script>
+      //sns 공유하기
+      $(".facebook")
+            .click(
+                  function(e) {
+                     e.preventDefault();
+                     window
+                           .open(
+                                 'https://www.facebook.com/sharer/sharer.php?u='
+                                       + encodeURIComponent(document.URL)
+                                       + '&t='
+                                       + encodeURIComponent(document.title),
+                                 'facebooksharedialog',
+                                 'menubar=no, toolbar=no, resizable=yes, scrollbars=yes, height=300, width=600');
+                  });
+      $(".twitter")
+            .click(
+                  function(e) {
+                     e.preventDefault();
+                     window
+                           .open(
+                                 'https://twitter.com/intent/tweet?text=[%EA%B3%B5%EC%9C%A0]%20'
+                                       + encodeURIComponent(document.URL)
+                                       + '%20-%20'
+                                       + encodeURIComponent(document.title),
+                                 'twittersharedialog',
+                                 'menubar=no, toolbar=no, resizable=yes, scrollbars=yes, height=300, width=600');
+                  });
+   </script>
 </body>
 </html>
 
@@ -567,6 +569,5 @@ th {
 		loginForm.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
 		document.body.appendChild(loginForm);
 	}
-//-->
-</script>
-
+	//-->
+</

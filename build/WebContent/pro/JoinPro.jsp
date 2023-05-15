@@ -16,7 +16,7 @@
     
         
         function goLoginForm() {
-            location.href="../view/LoginForm.jsp";
+            location.href="../res/index.jsp";
         }    
     </script>
 </head>
